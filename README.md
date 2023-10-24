@@ -31,6 +31,7 @@ Requirement packages:
 - make
 - OpenSSL
 - libsodium library
+- Eigen library
 
 On Linux:
 
