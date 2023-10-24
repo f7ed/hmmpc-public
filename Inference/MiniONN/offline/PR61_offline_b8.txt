@@ -1,0 +1,16 @@
+20188560
+10174560
+10096720
+82720 61
+0
+82800
+
+#Random = 20188560
+#DoubleR = 10174560
+#RandomBit = 10096720
+#RandomUn = 82720 61
+#RandomTrunc = 0
+#RandomReTrunc = 82800
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

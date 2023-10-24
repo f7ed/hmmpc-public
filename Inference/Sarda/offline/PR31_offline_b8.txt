@@ -1,0 +1,17 @@
+1073840
+544320
+538160
+8640 31
+0
+8720
+0
+
+#Random = 1073840
+#DoubleR = 544320
+#RandomBit = 538160
+#RandomUn = 8640 31
+#RandomTrunc = 0
+#RandomReTrunc = 8720
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

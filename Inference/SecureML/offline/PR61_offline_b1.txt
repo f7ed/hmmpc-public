@@ -1,0 +1,17 @@
+63074
+63330
+31842
+256 61
+0
+266
+
+// 61-bit
+#Random = 63074
+#DoubleR = 63330
+#RandomBit = 31842
+#RandomUn = 256 61
+#RandomTrunc = 0
+#RandomReTrunc = 266
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

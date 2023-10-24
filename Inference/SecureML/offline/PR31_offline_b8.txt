@@ -1,0 +1,19 @@
+256432
+129024
+129456
+2048 31
+0
+2128
+0
+0
+
+// 31-bit
+#Random = 256432
+#DoubleR = 129024
+#RandomBit = 129456
+#RandomUn = 2048 31
+#RandomTrunc = 0
+#RandomReTrunc = 2128
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

@@ -1,0 +1,18 @@
+10259760
+5211360
+5131120
+82720 31
+0
+82800
+0
+
+
+#Random = 10259760
+#DoubleR = 5211360
+#RandomBit = 5131120
+#RandomUn = 82720 31
+#RandomTrunc = 0
+#RandomReTrunc = 82800
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

@@ -1,0 +1,17 @@
+504592
+251904
+254736
+2048 61
+0
+2128
+
+// 61-bit
+#Random = 504592
+#DoubleR = 251904
+#RandomBit = 254736
+#RandomUn = 2048 61
+#RandomTrunc = 0
+#RandomReTrunc = 2128
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

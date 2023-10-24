@@ -1,0 +1,56 @@
+ROOT = .
+
+OPTIM= -O3
+#PROF = -pg
+# DEBUG = -DDEBUG
+# GDEBUG = -g
+# CFLAGS += -g
+
+# set to -march=<architecture> for optimization
+# SSE4.2 is required homomorphic encryption in GF(2^n) when compiling with clang
+# AES-NI and PCLMUL are not required
+# AVX is required for oblivious transfer (OT)
+# AVX2 support (Haswell or later) is used to optimize OT
+# AVX/AVX2 is required for replicated binary secret sharing
+# BMI2 is used to optimize multiplication modulo a prime
+# ADX is used to optimize big integer additions
+# delete the second line to compile for a platform that supports everything
+ARCH = -mtune=native -msse4.1 -msse4.2 -maes -mpclmul -mavx -mavx2 -mbmi2 -madx
+ARCH = -march=native
+
+MACHINE := $(shell uname -m)
+OS := $(shell uname -s)
+
+# allow to set compiler in CONFIG.mine
+CXX = g++
+
+# use CONFIG.mine to overwrite DIR settings
+-include CONFIG.mine
+
+# pre-processing
+CFLAGS += -DDISPERSE_PKING
+# CFLAGS += -DVERBOSE
+# CFLAGS += -DPRECISE_DIVISION
+# CFLAGS += -DZERO_OFFLINE
+# CFLAGS += -DDEBUG_NN
+# CFLAGS += -DDEBUG_NETWORKING
+
+LDLIBS = -lsodium $(MY_LDLIBS)
+
+ifeq ($(OS), Linux)
+LDLIBS += -lrt
+endif
+
+CFLAGS += $(ARCH) $(MY_CFLAGS) $(GDEBUG) -Wextra -Wall $(OPTIM) -I$(ROOT) -pthread $(DEBUG) -std=c++11 
+
+# -fopenmp: speed up eigen using multi-thread
+ifeq ($(OS), Darwin)
+CFLAGS += -Xclang -fopenmp
+LDLIBS += -lomp
+else 
+CFLAGS += -fopenmp
+endif
+
+CPPFLAGS = $(CFLAGS)
+LD = $(CXX)
+

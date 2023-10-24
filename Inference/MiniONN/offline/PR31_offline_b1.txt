@@ -1,0 +1,17 @@
+1282470
+651420
+641390
+10340 31
+0
+10350
+
+
+#Random = 1282470
+#DoubleR = 651420
+#RandomBit = 641390
+#RandomUn = 10340 31
+#RandomTrunc = 0
+#RandomReTrunc = 10350
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

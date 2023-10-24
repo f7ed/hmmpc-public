@@ -1,0 +1,15 @@
+128247000
+65142000
+64139000
+1034000 31
+0
+1035000
+#Random = 128247000
+#DoubleR = 65142000
+#RandomBit = 64139000
+#RandomUn = 1034000 31
+#RandomTrunc = 0
+#RandomReTrunc = 1035000
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

@@ -1,0 +1,16 @@
+13423000
+6804000
+6727000
+108000 31
+0
+109000
+
+#Random = 13423000
+#DoubleR = 6804000
+#RandomBit = 6727000
+#RandomUn = 108000 31
+#RandomTrunc = 0
+#RandomReTrunc = 109000
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

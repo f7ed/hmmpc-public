@@ -1,0 +1,17 @@
+2113040
+1062720
+1058960
+8640 61
+0
+8720
+
+// 61-bit
+#Random = 2113040
+#DoubleR = 1062720
+#RandomBit = 1058960
+#RandomUn = 8640 61
+#RandomTrunc = 0
+#RandomReTrunc = 8720
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

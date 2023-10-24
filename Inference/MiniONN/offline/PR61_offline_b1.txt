@@ -1,0 +1,17 @@
+2523570
+1271820
+1262090
+10340 61
+0
+10350
+
+// 61-bit
+#Random = 2523570
+#DoubleR = 1271820
+#RandomBit = 1262090
+#RandomUn = 10340 61
+#RandomTrunc = 0
+#RandomReTrunc = 10350
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

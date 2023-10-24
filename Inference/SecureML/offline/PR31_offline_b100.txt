@@ -1,0 +1,13 @@
+3205400
+1612800
+1618200
+25600 31
+0
+26600
+
+#Random = 3205400
+#DoubleR = 1612800
+#RandomBit = 1618200
+#RandomUn = 25600 31
+#RandomTrunc = 0
+#RandomReTrunc = 26600

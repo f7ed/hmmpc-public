@@ -1,0 +1,17 @@
+32054
+16128
+16182
+256 31
+0
+266
+0
+
+#Random = 32054
+#DoubleR = 16128
+#RandomBit = 16182
+#RandomUn = 256 31
+#RandomTrunc = 0
+#RandomReTrunc = 266
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

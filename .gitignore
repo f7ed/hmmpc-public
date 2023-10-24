@@ -1,0 +1,10 @@
+CONFIG.mine
+.VSCodeCounter/**
+.vscode/**
+
+*.d
+*.o
+*.a
+*.x
+
+.ipynb_checkpoints

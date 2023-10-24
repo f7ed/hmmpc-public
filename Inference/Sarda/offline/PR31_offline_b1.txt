@@ -1,0 +1,18 @@
+134230
+68040
+67270
+1080 31
+0
+1090
+0
+
+// 31-bit
+#Random = 134230
+#DoubleR = 68040
+#RandomBit = 67270
+#RandomUn = 1080 31
+#RandomTrunc = 0
+#RandomReTrunc = 1090
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0

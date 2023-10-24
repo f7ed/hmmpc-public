@@ -1,0 +1,16 @@
+32054000
+16128000
+16182000
+256000 31
+0
+266000
+
+#Random = 32054000
+#DoubleR = 16128000
+#RandomBit = 16182000
+#RandomUn = 256000 31
+#RandomTrunc = 0
+#RandomReTrunc = 266000
+#RandomTrunc(ML) = 0
+#RandomReTrunc(ML) = 0
+#RandomReTrunc(diff) = 0
