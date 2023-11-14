@@ -45,7 +45,8 @@ sudo apt install -y cmake
 # install openssl
 sudo apt-get install libssl-dev
 
-# install sodium
+# install sodium 
+# Before executing the following commands, you need to download, unzip, and open the tarball of libsodium. The detailed installation is referred to in https://doc.libsodium.org/installation.
 ./configure
 make -j8 && make -j8 check
 sudo make install
