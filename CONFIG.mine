@@ -1,7 +1,7 @@
 MY_CFLAGS += -I/usr/local/opt/openssl/include -I/opt/homebrew/opt/openssl/include -I/opt/homebrew/include
 MY_LDLIBS += -L/usr/local/opt/openssl/lib -L/opt/homebrew/lib -L/opt/homebrew/opt/openssl/lib
 
-MY_CFLAGS += -I/usr/local/include/eigen3
+# MY_CFLAGS += -I/usr/local/include/eigen3
 MY_CFLAGS += -I/usr/local/opt/libomp/include
 MY_LDLIBS += -L/usr/local/opt/libomp/lib
 # ARCH = -march=-march=armv8.2-a+crypto
