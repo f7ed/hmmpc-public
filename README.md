@@ -9,8 +9,9 @@ A general framework of scalable multi-party computation protocols for privacy-pr
 3. [Local Inference on a Single Machine](#local-inference-on-a-single-machine)
     1. [TL;DR](#tl-dr-1)
     2. [Functionality](#functionality)
-    3. [Output](#output)
-    4. [Supported Settings](#supported-settings)
+    3. [Supported Settings](#supported-settings)
+    4. [Output](#output)
+    5. [Detailed Command Executed in Bash Script](#detailed-command-executed-in-bash-script)
 4. [Remote Inference over Multiple Servers](#remote-inference-over-multiple-servers)
     1. [Traffic Control to Simulate LAN and WAN](#trafic-control-to-simulate-lan-and-wan)
     2. [Separate Execution with Scripts](#separate-execution-with-scripts)
@@ -37,37 +38,15 @@ On Linux:
 
 ```shell
 sudo apt update
-sudo apt install -y build-essential
 
-# install cmake
-sudo apt install -y cmake
-
-# install openssl
-sudo apt-get install libssl-dev
-
-# install sodium 
-# Before executing the following commands, you need to download, unzip, and open the tarball of libsodium. 
-# The detailed installation is referred to in https://doc.libsodium.org/installation.
-# Alternatively, `apt-get install libsodium-dev` is workable.
-./configure
-make -j8 && make -j8 check
-sudo make install
-
-# install tc (traffic control) to simulate LAN & WAN
-sudo apt install iproute2
-
-# install Eigen
-# download eigen-3.4.0.tar.gz from https://eigen.tuxfamily.org/dox/GettingStarted.html
-tar xvzf eigen-3.4.0.tar.gz
-cd eigen-3.4.0.tar.gz
-mkdir build
-cd build
-cmake ..
-sudo make install
+# install cmake openssl libsodium tc 
+# tc (traffic control) is used to simulate LAN & WAN
+sudo apt install -y build-essential cmake libssl-dev libsodium-dev iproute2 
 ```
+We have added the Eigen's header files in our artifact, located in `Eigen/` subdirectory, which are the only required files to compile with Eigen.
 
+We **strongly recommend** readers to compile and run the program on Linux machines since we do not fully test the configurations on other platforms. 
 On macOS, this requires brew to be installed.
-
 ```shell
 make mac-setup
 ```
@@ -178,53 +157,11 @@ The functionality of the program `ML/inference.cpp`  is as follows:
 4. Perform an inference over the network in the online phase.
 5. Output the statistical data of the preprocessing phase and online phase, including the time and communication size.
 
-### Output
-
-The output consists of two parts, the offline part and the online phase. The statistical data is defaultly of P0, which includes the time, the communication size, and the number of rounds. 
-
-Note that the number of rounds here is different from the round complexity mentioned in the paper, which here indeed counts the number of sending a message.
-
-It looks like the following:
-
-```text
----OFFLINE----
-Time = 0.01196 seconds
-Data sent = 0.287812 MB in ~29 rounds
-Global data sent = 0.957904 MB (all parties)
-Preprocessed Randomness:
-#Random = 32054
-#DoubleR = 16128
-#RandomBit = 16182
-#RandomUn = 256 31
-#RandomTrunc = 0
-#RandomReTrunc = 266
--------------
----ONLINE---
-Time = 0.002851 seconds
-Data sent = 0.050928 MB in ~18 rounds
-Global data sent = 0.142496 MB (all parties)
--------------
-Execution completed
-```
-
-It also counts the number of different random sharings required in the online phase.
-
-- #Random: number of random sharings
-- #DoubleR: number of double random sharings
-- #RandomBit: number of random bits
-- #RandomUn: number of random correlated pairs for unbounded multiplications
-- #RandomTrunc: number of truncation triples for pure truncation
-- #RandomReTrunc: number of truncation triples for fixed-point multiplication
-
-![Figure 1 in Appendix A of the paper](Tables/overview-of-protocols.png)
-
-Having the number enables us to generate all required randomness in the preprocessing phase.
-
 ### Supported Settings 
 
 You can modify the scripts `/Scripts/inference.sh` to execute the private-preserving inference in different settings.
 
-First of all, you can use this script to simulate any arbitrary parties of **odd numbers**.
+First of all, you can use this script to simulate any arbitrary parties of **odd numbers** on one terminal.
 
 ```shell
 ./Scripts/inference.sh <npc>
@@ -232,13 +169,13 @@ First of all, you can use this script to simulate any arbitrary parties of **odd
 
 For ease of programming, we demand the number of parties $n$ is an odd number and the threshold is fixed to $t=(n-1)/2$.
 
-But we **DO NOT** recommend that you simulate a large number of parties in a single computer that may lead to a crash. 
+But we **DO NOT** recommend that you simulate a large number of parties in a single computer that may lead to a crash due to the limited resources. 
 
 Other modifiable settings are as follows:
 
 - `TEST_DATA_SIZE=1`  
 
-  Although it supports inputs of any size, we only precompute the number of required randomness for `TEST_DATA_SIZE=1`  and `TEST_DATA_SIZE=8`.  If you want to test for inputs of other sizes, we recommend you set `TRUE_OFFLINE=0`. 
+  Although it supports inputs of any size, we only precompute the number of required randomness for `TEST_DATA_SIZE=1`  and `TEST_DATA_SIZE=8`.  If you want to test for inputs of other sizes, we recommend you set `TRUE_OFFLINE=0` at first to obtain the number of required random sharings. 
 
 - `PRIME=PR31` : Specified arithmetic field over a Mersenne prime.
 
@@ -262,15 +199,184 @@ Other modifiable settings are as follows:
 
   - `0`: It generates the required randomness on demand. In this setting, the whole computation alternates between the preprocessing phase and the online phase. We maintain the timer of running time and counter of communication bytes for each phase. As a result, when it is required to generate some randomness, it switches to the preprocessing phase, resuming the corresponding timer and counter. Then it switches to the online phase to continue the remaining computation.
 
-    For simplicity of experimental statics, the output will be simplified when the setting is  `TRUE_OFFLINE=1`. It only outputs the timer and number of communication bytes. 
+### Output
 
-    ```text
-    onlineTime onlineComm offlineTime offlineComm allComm
-    0.0038 0.0474987 0.015232 0.319424 0.366923
-    Execution completed
-    ```
+We provide two kinds of outputs for different purposes.
+
+- When setting ` TRUE_OFFLINE=0`, we want to collect detailed statistics, including the time and communication bytes **for each party**. (You can refer to [Detailed Command Executed in Bash Script](#detailed-command-executed-in-bash-script) to run the program in separate terminals to output the detailed statistics of each party.) Moreover, we want to collect the number of various random sharings required in the whole protocol. Having the number of random sharings enables us to conduct the experiments with a separate offline.
+- When setting ` TRUE_OFFLINE=1` with the provided number of random sharings, it seems to conform to the real scenarios. Hence, we want to collect more data points to analyze the efficiency. Recall that the **communication complexity is measured by the number of field elements sent by each party.** Hence, the **statistics of communication size outputted in this setting is rather an average of the communication bytes sent by all parties** than the raw data of some specific party. You can check the code to validate it.
+
+It is worth noting that the usage of `./Scripts/inference.sh 3 NETWORK=Sarda` is **not supported**. You **must modify the bash scripts by hand, and then run the modified script.**  Otherwise, the options specified in the command won't take effect.
+
+Here we illustrate several examples with different settings.
+
+#### TRUE_OFFLINE=0
+
+As described above, we can use the bash scripts (`Scripts/inference.sh`) to run the program in a single terminal.
+
+Here I copy the incomplete script to demonstrate the configuration we set.
+
+Incomplete Script:
+
+```bash
+# Command: ./Scripts/inference.sh 3
+# Make an inference in the setting of 3PC with the following settings.
+
+MAX_PLAYERS=$1
+TEST_DATA_SIZE=1
+# PRIME = {PR31, PR61}
+PRIME=PR31
+# NETWORK = {SecureML, Sarda, MiniONN}
+NETWORK=SecureML
+# Dataset = {MNIST}
+DATASET=MNIST
+# True Offline: 
+TRUE_OFFLINE=0
+CORES=4
+```
+
+The output consists of two parts, the offline part and the online phase. The statistical data is **of P0 by default**, including the time, the communication size, and the number of rounds. 
+
+Note that the number of rounds here is different from the round complexity mentioned in the paper, which here indeed counts the number of sending a message.
+
+Output: (P0's output in the terminal by default)
+
+```text
+---OFFLINE----
+Time (for P0) = 0.008551 seconds
+Data sent (for P0) = 0.287812 MB in ~29 rounds
+Global data sent = 0.957904 MB (all parties)
+Preprocessed Randomness:
+#Random = 32054
+#DoubleR = 16128
+#RandomBit = 16182
+#RandomUn = 256 31
+#RandomTrunc = 0
+#RandomReTrunc = 266
+-------------
+---ONLINE---
+Time (for P0) = 0.001594 seconds
+Data sent (for P0) = 0.050928 MB in ~18 rounds
+Global data sent = 0.142496 MB (all parties)
+-------------
+Execution completed
+```
+
+It also counts the number of different random sharings required in the online phase.
+
+- #Random: number of random sharings
+- #DoubleR: number of double random sharings
+- #RandomBit: number of random bits
+- #RandomUn: number of random correlated pairs for unbounded multiplications
+- #RandomTrunc: number of truncation triples for pure truncation
+- #RandomReTrunc: number of truncation triples for fixed-point multiplication
+
+![Figure 1 in Appendix A of the paper](Tables/overview-of-protocols.png)
+
+Having the number enables us to generate all required randomness in the preprocessing phase.
 
 
+
+#### TRUE_OFFLINE=1
+
+Incomplete Script:
+
+```bash
+# Command: ./Scripts/inference.sh 3
+# Make an inference in the setting of 3PC with the following settings.
+
+MAX_PLAYERS=$1
+TEST_DATA_SIZE=1
+# PRIME = {PR31, PR61}
+PRIME=PR31
+# NETWORK = {SecureML, Sarda, MiniONN}
+NETWORK=Sarda
+# Dataset = {MNIST}
+DATASET=MNIST
+# True Offline: 
+TRUE_OFFLINE=1
+CORES=4
+
+IP_FILE=Inference/IP_HOSTS/IP_LOCAL
+BASE_FILE=Inference/$NETWORK
+Output_file=$BASE_FILE/$NETWORK.P0
+OFFLINE_ARG=$BASE_FILE/offline/${PRIME}_offline_b$TEST_DATA_SIZE.txt
+
+# ommited
+
+# You can change the number of iterations to collect more data points, each of which is a complete execution of the protocol. 
+for ((k=1; k<=1; k=k+1)); do
+    if test $TRUE_OFFLINE = "1"; then
+        echo "[Note: onlineTime and offlineTime measure the time of P0 by default.]"
+        echo "[Note: onlineComm, offlineComm, and allComm measure the average communication bytes of all parties.]"
+        echo "onlineTime onlineComm offlineTime offlineComm allComm"
+    fi
+    one_iteration
+done
+```
+
+In the setting of `TRUE_OFFLINE=1` , the output is much simpler. If you want to conduct multiple independent runs in one command, you can directly change the number of iterations to collect more data points, each of which is a complete execution of the protocol, as shown above.
+
+  ```text
+[Note: onlineTime and offlineTime measure the online and offline time of P0 by default, respectively.]
+[Note: onlineComm, offlineComm, and allComm measure the average of communication bytes sent by all parties.]
+onlineTime onlineComm offlineTime offlineComm allComm
+0.005609 0.200213 0.02477 1.33976 1.53997
+Execution completed
+  ```
+
+
+
+### Detailed Command Executed in Bash Script
+
+To show what happens in the bash script, I rewrite the detailed command of the setting of 3PC in the Makefile. You can modify the options in the Makefile as usual and use `make -j8 terminal` to execute the following commands in one terminal, which simulates three parties and only outputs P0's results in the terminal.
+
+Note that the usage of `./Scripts/inference.sh 3 NETWORK=Sarda` or `make -j8 terminal NETWORK=Sarda` is **not supported**. You **must modify the options in Makefile by hand, and then 'make' it.**  Otherwise, the options specified in the command won't take effect.
+
+Incomplete Makefile:
+
+```makefile
+# Makefile
+# usage: make -j8 terminal
+MAX_PLAYERS=3
+THRESHOLD=1
+TEST_DATA_SIZE=1
+PRIME=PR31# {PR31, PR61}
+NETWORK=SecureML# {SecureML, Sarda, MiniONN}
+DATASET=MNIST# {MNIST}
+TRUE_OFFLINE=0
+CORES=4
+NET=LAN
+
+terminal: inference.x
+	./inference.x 2 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) $(OFFLINE_ARG) $(CORES) > /dev/null &
+	./inference.x 1 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) $(OFFLINE_ARG) $(CORES) > /dev/null &
+	./inference.x 0 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) $(OFFLINE_ARG) $(CORES)
+	@echo "Execution completed"
+```
+You can also execute these commands in three separate terminals and output the results of each party.
+
+```makefile
+# Makefile
+
+# make -j8 zero
+zero: inference.x
+	./inference.x 0 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) ${OFFLINE_ARG} ${CORES}
+	@echo "Execution completed"
+
+# make -j8 one
+one: inference.x
+	./inference.x 1 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) ${OFFLINE_ARG} ${CORES}
+	@echo "Execution completed"
+
+# make -j8 two
+two: inference.x
+	./inference.x 2 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) ${OFFLINE_ARG} ${CORES}
+	@echo "Execution completed"
+
+```
+
+In the settings of a large number of parties, it is inconvenient to enter such tedious commands in the terminal. That's why we use the bash script to facilitate the experiments with different settings.
 
 ## Remote Inference over Multiple Servers
 
@@ -367,3 +473,7 @@ All the raw data points of the Table 2-5 figured in the paper are collected in t
 - `Tables/hmmpc-experiment-LAN(PR31).xlsx` : raw data points in the LAN setting
 - `Tables/hmmpc-experiment-WAN(PR31).xlsx`: raw data points in the WAN setting
 - `Tables/Comparison-with-Falcon.xlsx` : raw data points of Falcon with the same setting
+
+Note that all the raw data points in the Excel tables are collected in the setting of `TRUE_OFFLINE=1` where the random sharings are generated in a separate pre-processing phase totally before the online phase, and the communication size is the average of the communication bytes sent by all parties. 
+
+Hence, if you want to reproduce the result, you need to set `TRUE_OFFLINE=1`.

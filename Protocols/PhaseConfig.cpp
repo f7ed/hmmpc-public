@@ -69,8 +69,8 @@ void PhaseConfig::print_offline_communication()
 {
     auto &P = ShareBase::P;
     cout << "---OFFLINE----"<<endl;
-    cout << "Time = "<<offlineTimer<<" seconds"<<endl;
-    cout << "Data sent = "<< offlineSent/1e6 <<" MB in ~"<<offlineComm.total_rounds()<<" rounds"<<endl;
+    cout << "Time (for P"<<P->my_num()<<") = "<<offlineTimer<<" seconds"<<endl;
+    cout << "Data sent (for P"<<P->my_num()<<") = "<< offlineSent/1e6 <<" MB in ~"<<offlineComm.total_rounds()<<" rounds"<<endl;
     octetStream o;
     o.store(offlineSent);
     P->send_all_no_stats(o);
@@ -130,8 +130,8 @@ void PhaseConfig::print_online_communication()
 {
     auto &P = ShareBase::P;
     cout << "---ONLINE---"<<endl;
-    cout << "Time = "<<onlineTimer<<" seconds"<<endl;
-    cout << "Data sent = "<< onlineSent/1e6 <<" MB in ~"<<onlineComm.total_rounds()<<" rounds"<<endl;
+    cout << "Time (for P"<<P->my_num()<<") = "<<onlineTimer<<" seconds"<<endl;
+    cout << "Data sent (for P"<<P->my_num()<<") = "<< onlineSent/1e6 <<" MB in ~"<<onlineComm.total_rounds()<<" rounds"<<endl;
     octetStream o;
     o.store(onlineSent);
     P->send_all_no_stats(o);

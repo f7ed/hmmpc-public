@@ -40,6 +40,8 @@ $(LIBRELEASE):  $(COMMONOBJS)
 %.x: ML/%.o $(LIBRELEASE)
 	$(CXX) -o $@ $(CFLAGS) $^ $(LDLIBS)
 
+all: test_units.x test_network.x test_eigen.x inference.x
+
 test: test_units.x ## Run this to print the output of (only) Party 0 to terminal
 	./test_units.x 2  >/dev/null &
 	./test_units.x 1  >/dev/null &
@@ -55,7 +57,44 @@ network: test_network.x
 eigen: test_eigen.x
 	./test_eigen.x
 	@echo "Execution completed"
-	
+
+# The following are the supported settings in the bash script.
+# Here we illustrate an example of 3PC setting and show the detailed execution command for each party.
+# It inconvenient to entering such tedious command in the terminal to conduct experiments for the settings of large number of parties. 
+# So we use bash script to faciliate the experiment. 
+MAX_PLAYERS=3
+THRESHOLD=1
+TEST_DATA_SIZE=1
+PRIME=PR31# {PR31, PR61}
+NETWORK=SecureML# {SecureML, Sarda, MiniONN}
+DATASET=MNIST# {MNIST}
+TRUE_OFFLINE=0
+CORES=4
+NET=LAN
+
+IP_FILE=Inference/IP_HOSTS/IP_LOCAL
+BASE_FILE=Inference/$(NETWORK)
+Output_file=$(BASE_FILE)/$(NETWORK).P0
+OFFLINE_ARG=$(BASE_FILE)/offline/$(PRIME)_offline_b$(TEST_DATA_SIZE).txt
+
+terminal: inference.x
+	./inference.x 2 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) $(OFFLINE_ARG) $(CORES) > /dev/null &
+	./inference.x 1 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) $(OFFLINE_ARG) $(CORES) > /dev/null &
+	./inference.x 0 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) $(OFFLINE_ARG) $(CORES)
+	@echo "Execution completed"
+
+zero: inference.x
+	./inference.x 0 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) ${OFFLINE_ARG} ${CORES}
+	@echo "Execution completed"
+
+one: inference.x
+	./inference.x 1 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) ${OFFLINE_ARG} ${CORES}
+	@echo "Execution completed"
+
+two: inference.x
+	./inference.x 2 $(IP_FILE) $(THRESHOLD) $(NETWORK) $(DATASET) $(TEST_DATA_SIZE) $(TRUE_OFFLINE) ${OFFLINE_ARG} ${CORES}
+	@echo "Execution completed"
+
 ifeq ($(OS), Darwin)
 setup: mac-setup
 else

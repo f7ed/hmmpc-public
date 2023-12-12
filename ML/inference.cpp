@@ -62,10 +62,14 @@ int main(int argc, char** argv)
 
     // phase.print_simple();
 
-    if(!atoi(argv[7])){// True offline.
+    if(!atoi(argv[7])){// True offline
+        // The randomness are generated on demand.
+        // It prints the communication costs of each party in the terminal. 
         phase.print_offline_communication();
         phase.print_online_communication();
     }else{
+        // The randomness are generated in a seperate pre-processing phase.
+        // The communication size printed here is the average of the communicaiton bytes sent by all parties.
         phase.print_communication_oneline();
     }
     

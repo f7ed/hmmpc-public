@@ -1,6 +1,6 @@
 #!/bin/bash
 # Make an inference in the setting of 3PC
-# ./Scripts/inference.x 3
+# ./Scripts/inference.sh 3
 
 MAX_PLAYERS=$1
 TEST_DATA_SIZE=1
@@ -83,7 +83,9 @@ function one_iteration () {
 clear_file $MAX_PLAYERS
 for ((k=1; k<=1; k=k+1)); do
     if test $TRUE_OFFLINE = "1"; then
-        echo onlineTime onlineComm offlineTime offlineComm allComm
+        echo "[Note: onlineTime and offlineTime measure the online and offline time of P0 by default, respectively.]"
+        echo "[Note: onlineComm, offlineComm, and allComm measure the average of communication bytes sent by all parties.]"
+        echo "onlineTime onlineComm offlineTime offlineComm allComm"
     fi
     one_iteration
 done
