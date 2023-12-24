@@ -13,7 +13,7 @@ A general framework of scalable multi-party computation protocols for privacy-pr
     4. [Output](#output)
     5. [Detailed Command Executed in Bash Script](#detailed-command-executed-in-bash-script)
 4. [Remote Inference over Multiple Servers](#remote-inference-over-multiple-servers)
-    1. [Traffic Control to Simulate LAN and WAN](#trafic-control-to-simulate-lan-and-wan)
+    1. [Traffic Control to Simulate LAN and WAN](#traffic-control-to-simulate-lan-and-wan)
     2. [Separate Execution with Scripts](#separate-execution-with-scripts)
 
 ## Requirement 
