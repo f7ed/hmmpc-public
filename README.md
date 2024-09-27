@@ -1,5 +1,9 @@
 # Scalable Multi-Party Computation Protocols for Machine Learning in the Honest-Majority Setting
-A general framework of scalable multi-party computation protocols for privacy-preserving inference, where the model is secret-shared among all data owners, with semi-honest security in the honest majority setting. This work has been accepted in [USENIX '24 Security](https://www.usenix.org/conference/usenixsecurity24) (in Summer Circle).
+A general framework of scalable multi-party computation protocols for privacy-preserving inference, where the model is secret-shared among all data owners, with semi-honest security in the honest majority setting. This [work](https://www.usenix.org/system/files/usenixsecurity24-liu-fengrun.pdf) has been accepted in [USENIX '24 Security](https://www.usenix.org/conference/usenixsecurity24) (in the Summer Circle).
+
+This [artifact](https://www.usenix.org/system/files/usenixsecurity24-appendix-liu-fengrun.pdf) has been awarded with *Available, Functional, Reproduced* badges in the [USENIX Security '24 Artifact Evaluation (AE).](https://secartifacts.github.io/usenixsec2024/) 
+
+The presented slides about this work can be found on my [website](https://f7ed.com/liu/) :)
 
 ### Table of Contents
 1. [Requirement](#requirement)
