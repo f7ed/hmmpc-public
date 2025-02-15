@@ -1,26 +1,30 @@
 # Scalable Multi-Party Computation Protocols for Machine Learning in the Honest-Majority Setting
 A general framework of scalable multi-party computation protocols for privacy-preserving inference, where the model is secret-shared among all data owners, with semi-honest security in the honest majority setting. 
 
-This [paper](https://www.usenix.org/system/files/usenixsecurity24-liu-fengrun.pdf) has been accepted at [USENIX '24 Security](https://www.usenix.org/conference/usenixsecurity24) (in Sep. 2023 during the Summer Circle).
+This [paper](https://dl.acm.org/doi/10.5555/3698900.3699009) has been accepted at [USENIX '24 Security](https://www.usenix.org/conference/usenixsecurity24) (in Sep. 2023 during the Summer Circle).
 
 This [artifact](https://www.usenix.org/system/files/usenixsecurity24-appendix-liu-fengrun.pdf) has been awarded with *Available, Functional, Reproduced* badges in the [USENIX Security '24 Artifact Evaluation (AE).](https://secartifacts.github.io/usenixsec2024/) 
 
 The presented slides about this work can be found on my [website](https://f7ed.com/liu/) :)
 
 ### Table of Contents
-1. [Requirement](#requirement)
-2. [Unit Tests](#unit-tests)
-    1. [TL;DR](#tl-dr)
-    2. [Unit Tests for Protocols](#unit-tests-for-protocols-mentioned-in-paper)
-3. [Local Inference on a Single Machine](#local-inference-on-a-single-machine)
-    1. [TL;DR](#tl-dr-1)
-    2. [Functionality](#functionality)
-    3. [Supported Settings](#supported-settings)
-    4. [Output](#output)
-    5. [Detailed Command Executed in Bash Script](#detailed-command-executed-in-bash-script)
-4. [Remote Inference over Multiple Servers](#remote-inference-over-multiple-servers)
-    1. [Traffic Control to Simulate LAN and WAN](#traffic-control-to-simulate-lan-and-wan)
-    2. [Separate Execution with Scripts](#separate-execution-with-scripts)
+- [Scalable Multi-Party Computation Protocols for Machine Learning in the Honest-Majority Setting](#scalable-multi-party-computation-protocols-for-machine-learning-in-the-honest-majority-setting)
+    - [Table of Contents](#table-of-contents)
+  - [Requirement](#requirement)
+  - [Unit Tests](#unit-tests)
+    - [TL; DR](#tl-dr)
+    - [Unit Tests for Protocols Mentioned in Paper](#unit-tests-for-protocols-mentioned-in-paper)
+  - [Local Inference on a Single Machine](#local-inference-on-a-single-machine)
+    - [TL; DR](#tl-dr-1)
+    - [Functionality](#functionality)
+    - [Supported Settings](#supported-settings)
+    - [Output](#output)
+      - [TRUE\_OFFLINE=0](#true_offline0)
+      - [TRUE\_OFFLINE=1](#true_offline1)
+    - [Detailed Command Executed in Bash Script](#detailed-command-executed-in-bash-script)
+  - [Remote Inference over Multiple Servers](#remote-inference-over-multiple-servers)
+    - [Traffic Control to Simulate LAN and WAN](#traffic-control-to-simulate-lan-and-wan)
+    - [Separate Execution with Scripts](#separate-execution-with-scripts)
 
 ## Requirement 
 
